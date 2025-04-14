@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧙‍♂️</title>
+    <style>
+        .section {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>Data 🧙‍♂️</div>
+    <div class="section"> Divined by positive to negative </div>
+    <div class="section">
+        <ol>
+            {% for subreddit_title in sorted_subreddits %}
+            <li><strong>{{ subreddit_title }}</strong></li>
+
+            <ul>
+                <li>{{ posts[subreddit_title][0]['title']}}</li>
+                <li>{{ posts[subreddit_title][0]['sentiment'][0]['label'] }}</li>
+                <li>{{ posts[subreddit_title][0]['sentiment'][0]['score'] }}</li>
+            </ul>
+            {% endfor %}
+        </ol>
+    </div>
+
+    <div>
+        <a href="/">
+            <button style="margin-top: 20px">
+                Back to index
+            </button>
+        </a>
+    </div>
+</body>
+
+</html>
