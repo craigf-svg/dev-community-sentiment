@@ -5,26 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🧙‍♂️</title>
-    <style>
-        .section {
-            margin-bottom: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/leaderboard.css') }}">
 </head>
 
 <body>
-    <div>Data 🧙‍♂️</div>
+    <div>Diviner 🧙‍♂️</div>
     <div class="section"> Divined by positive to negative </div>
     <div class="section">
-        <ol>
+        <ol class="leaderboard">
+            <li class="leaderboard-item title-item">Data Divined</li>
             {% for subreddit_title in sorted_subreddits %}
-            <li><strong>{{ subreddit_title }}</strong></li>
-
-            <ul>
-                <li>{{ posts[subreddit_title][0]['title']}}</li>
-                <li>{{ posts[subreddit_title][0]['sentiment'][0]['label'] }}</li>
-                <li>{{ posts[subreddit_title][0]['sentiment'][0]['score'] }}</li>
-            </ul>
+            <li class="leaderboard-item">
+                <div class="rank">{{ loop.index }}.</div>
+                <div class="subreddit">{{ subreddit_title }}</div>
+                <div class="mood">{{ sorted_subreddits[subreddit_title]['mood']}}</div>
+                <div class="score">{{ sorted_subreddits[subreddit_title]['score'] }}</div>
+            </li>
             {% endfor %}
         </ol>
     </div>

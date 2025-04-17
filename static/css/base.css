@@ -1,0 +1,26 @@
+.document {
+    max-width: 920px;
+    margin: 10px auto;
+    font-size: 20px;
+}
+
+.sidebar {
+    margin: 10px auto;
+    margin-right: 20px;
+    padding: 10px 0;
+    font-size: 12px;
+    float: left;
+}
+
+@media screen and (max-width: 720) {
+    .document {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+    .sidebar {
+        float: none;
+        padding: 5px 0;
+        background-color: #333;
+        color: #ccc;
+    }
+}
