@@ -1,0 +1,84 @@
+.section {
+    margin-bottom: 20px;
+}
+
+.htmx-indicator {
+    opacity: 0;
+    transition: opacity 500ms ease-in;
+    display: none;
+}
+
+.htmx-request.htmx-indicator {
+    opacity: 1;
+    display: inline-block;
+}
+
+.loader {
+    animation: spin 0.4s ease-in infinite alternate;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+.leaderboard {
+    background-color: #fff;
+    border-radius: 0px;
+    padding: 0;
+    margin: 20px 0;
+    border: 1px solid #ddd;
+    width: 50%;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.leaderboard-item {
+    background-color: #fff;
+    transition: background-color 0.3s;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    padding: 12px;
+}
+
+.leaderboard-item:hover {
+    background-color: #f9f9f9;
+}
+
+.leaderboard-item:last-child {
+    border-bottom: none;
+}
+
+/* Cancel hover effect*/
+.title-item:hover {
+    background-color: #fff;
+}
+
+.rank {
+    width: 10px;
+    text-align: center;
+}
+
+.subreddit {
+    flex: 1;
+    padding-left: 10px;
+}
+
+.score {
+    text-align: center;
+    color: #333;
+    white-space: nowrap;
+    flex: 1;
+}
+
+.mood {
+    text-align: center;
+    color: #333;
+    flex: 1;
+}

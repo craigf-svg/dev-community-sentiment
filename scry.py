@@ -24,6 +24,7 @@ def invoke_scry(subreddit):
         max_posts = 1
         if not post.stickied:
             sentiment = classifier(post.title)
+            sentiment[0]['score'] = round(sentiment[0]['score'], 2)
             posts.append({'title': post.title, 'sentiment': sentiment})
         if len(posts) >= max_posts:
             break

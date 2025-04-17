@@ -5,30 +5,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🧙‍♂️</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/leaderboard.css') }}">
 </head>
 
 <body>
-    <div>Initial Commit🧙‍♂️</div>
-    <p>
-        The path ahead is unfamiliar, but my feet know it well, worn by years of search and the weight of a thousand
-        unanswered questions. My staff hums with an energy that vibrates in my bones, as if it too knows we are
-        close.
-        The Flask is no myth, it is the key to everything I have sought in my long, weary life.
-        The land around me feels… alive, as though it recognizes my purpose and is testing me.
-        The mountains murmur in tongues I almost understand, and the rivers sing songs of forgotten realms.
-        There is danger here, but it matters little. I will find it. I must.
-        For once I drink from that flask, the universe will bare itself to me, and no shadow, no riddle, will ever
-        again
-        haunt my steps.
-    </p>
-    <p>
-        And I will become the master of my own fate, the architect of my own destiny. Builder of flask server.
-    </p>
-    <a href="/scry">
-        <button style="margin-top: 20px">
-            Scry
+    <div class="document">
+        <div class="sidebar">
+            <img src="/static/images/flask-dark-app-icon.svg" alt="Flask Dark App Icon" width="150" height="150">
+            <p>Last update: {{ last_update }}</p>
+            <p>
+                Next update in: {{ time_remaining.seconds // 3600 }} hours,
+                {{ (time_remaining.seconds // 60) % 60 }} minutes
+            </p>
+        </div>
+        <h3>Initial Commit</h3>
+        <p>
+            The path ahead is unfamiliar, but my feet know it well, worn by years of search and the weight of a thousand
+            unanswered questions. My staff hums with an energy that vibrates in my bones, as if it too knows we are
+            close.
+            The Flask is no myth, it is the key to everything I have sought in my long, weary life.
+            The land around me feels… alive, as though it recognizes my purpose and is testing me.
+            The mountains murmur in tongues I almost understand, and the rivers sing songs of forgotten realms.
+            There is danger here, but it matters little. I will find it. I must.
+            For once I drink from that flask, the universe will bare itself to me, and no shadow, no riddle, will ever
+            again
+            haunt my steps.
+        </p>
+        <p>
+            And I will become the master of my own fate, the architect of my own destiny. Builder of flask server.
+        </p>
+        <div>
+            <a href="/scry">
+                <button style="margin-top: 20px">
+                    Redirect web page to Scry (HTMX-less)
+                </button>
+            </a>
+        </div>
+        <button hx-post="/scry" hx-swap="outerHTML" hx-trigger="click" hx-vals='{"clicked": true}'
+            onclick='this.style.display="none"'' hx-indicator="#spinner">
+            Scry using the magic of Flask and HTMX
         </button>
-    </a>
+        <img src="{{ url_for('static', filename='images/htmx.svg' ) }}" id="spinner" class="htmx-indicator loader"
+            alt=" Loading..." height="150" width="150">
+    </div>
+    </div>
 </body>
 
 </html>

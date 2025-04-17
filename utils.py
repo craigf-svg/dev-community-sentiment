@@ -2,30 +2,49 @@ import prawcore
 import praw
 
 # Labels: 0 -> Negative; 1 -> Neutral; 2 -> Positive
-label_order = {
+label_rank = {
     'LABEL_0': 0,
     'LABEL_1': 1,
     'LABEL_2': 2
+}
+label_text = {
+    0: 'Negative',
+    1: 'Neutral',
+    2: 'Positive'
 }
 
 # TODO: If two subreddits have the same sentiment label, sort by sentiment score
 
 
-def restructure_sentiment_data(data):
+def structure_sentiment_data(data):
+    # Returns
     result = {}
-    print('data', data)
     for subreddit, posts in data.items():
         # Extract the sentiment label from the first post's sentiment
         sentiment_label = posts[0]['sentiment'][0]['label']
-        result[subreddit] = sentiment_label
+        label_number = label_rank[sentiment_label]
+        mood = label_text[label_number]
+        sentiment_score = posts[0]['sentiment'][0]['score']
+        result[subreddit] = {
+            'post_title': posts[0]['title'],
+            'label': sentiment_label,
+            'label_rank': label_rank[sentiment_label],
+            'mood': mood,
+            'score': sentiment_score,
+        }
     return result
 
 
 def sort_by_sentiment(posts):
-    newData = restructure_sentiment_data(posts)
-    sortedData = sorted(
-        newData, key=lambda x: label_order[newData[x]], reverse=True)
-    return sortedData
+    subreddit_sentiments = structure_sentiment_data(posts)
+    # Subreddit title key -> sentiment label + score
+    sorted_subreddits = dict(sorted(
+        subreddit_sentiments.items(),
+        key=lambda x: (
+            x[1]['label_rank'], x[1]['score']),
+        reverse=True
+    ))
+    return sorted_subreddits
 
 
 def test_reddit_connection(reddit):
