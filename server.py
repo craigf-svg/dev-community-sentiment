@@ -3,6 +3,7 @@ from scry import gather_conclave
 from utils import sort_by_sentiment
 from sample_data import sample_posts, sample_sorted_subs
 from datetime import datetime, timedelta
+from subreddit_groups import subreddit_groups
 
 app = Flask(__name__)
 
@@ -23,7 +24,7 @@ def home():
 @app.route('/scry', methods=['GET', 'POST'])
 def scry():
     # Fetch + analyze subreddit sentiment
-    subreddits = ['python', 'learnprogramming', 'flask']
+    subreddits = subreddit_groups
 
     posts = gather_conclave(subreddits)
 
