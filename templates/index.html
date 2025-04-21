@@ -37,19 +37,29 @@
             And I will become the master of my own fate, the architect of my own destiny. Builder of flask server.
         </p>
         <div>
-            <a href="/scry">
-                <button style="margin-top: 20px">
-                    Redirect web page to Scry (HTMX-less)
-                </button>
-            </a>
+        <div class="section">
+            <button hx-post="/test_db" hx-swap="outerHTML" hx-trigger="click" hx-vals='{"clicked": true}'
+            onclick='this.style.display="none"'>
+            Test DB
+            </button>
         </div>
-        <button hx-post="/scry" hx-swap="outerHTML" hx-trigger="click" hx-vals='{"clicked": true}'
-            onclick='this.style.display="none"'' hx-indicator="#spinner">
-            Scry using the magic of Flask and HTMX
-        </button>
-        <img src="{{ url_for('static', filename='images/htmx.svg' ) }}" id="spinner" class="htmx-indicator loader"
-            alt=" Loading..." height="150" width="150">
-    </div>
+
+        <div class="section">
+            <button hx-post="/scry" hx-swap="outerHTML" hx-trigger="click" hx-vals='{"clicked": true}'
+            hx-indicator="#spinner" onclick='this.style.display="none"'>
+            Get values realtime from Reddit API
+            </button>
+        </div>
+
+        <div class="section">
+            <button hx-post="/leaderboard" hx-swap="outerHTML" hx-trigger="click" hx-vals='{"clicked": true}'
+            onclick='this.style.display="none"'>
+            Get data from database
+            </button>
+        </div>
+            <img src="{{ url_for('static', filename='images/htmx.svg' ) }}" id="spinner" class="htmx-indicator loader"
+                alt=" Loading..." height="150" width="150">
+        </div>
     </div>
 </body>
 
