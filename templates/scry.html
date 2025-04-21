@@ -14,23 +14,15 @@
     <div class="section">
         <ol class="leaderboard">
             <li class="leaderboard-item title-item">Data Divined</li>
-            {% for subreddit_title in sorted_subreddits %}
+            {% for entry in sorted_subreddits %}
             <li class="leaderboard-item">
                 <div class="rank">{{ loop.index }}.</div>
-                <div class="subreddit">{{ subreddit_title }}</div>
-                <div class="mood">{{ sorted_subreddits[subreddit_title]['mood']}}</div>
-                <div class="score">{{ sorted_subreddits[subreddit_title]['score'] }}</div>
+                <div class="subreddit">{{ entry }}</div>
+                <div class="mood">{{ sorted_subreddits[entry]['mood']}}</div>
+                <div class="score">{{ sorted_subreddits[entry]['score'] }}</div>
             </li>
             {% endfor %}
         </ol>
-    </div>
-
-    <div>
-        <a href="/">
-            <button style="margin-top: 20px">
-                Back to index
-            </button>
-        </a>
     </div>
 </body>
 

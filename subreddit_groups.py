@@ -1,12 +1,12 @@
 subreddit_groups = [
-    "JavaScript",
+    #"JavaScript",
     "Python",
-    "java",
+    #"java",
     "rust",
-    "cpp",
+    # "cpp",
     "golang",
-    "csharp",
+    # "csharp",
     "sql",
     "php",
-    "typescript"
+    # "typescript"
 ]

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧙‍♂️</title>
+</head>
+
+<body>
+    <div>Diviner 🧙‍♂️</div>
+    <div class="section"> Divined by positive to negative </div>
+
+    <div class="section">
+        <li>QUERIED FROM DATABASE</li>
+        <ol class="leaderboard">
+            <li class="leaderboard-item title-item">Subreddit Sentiment Rankings (Last 24 Hours)</li>
+            {% for entry in leaderboard %}
+            <li class="leaderboard-item">
+                <div class="rank">{{ loop.index }}. </div>
+                <div class="subreddit">{{ entry.subreddit }} </div>
+                <div class="subreddit">{{ entry.date.strftime('%Y-%m-%d') }}</div>
+                <div class="subreddit">{{ entry.avg_sentiment }}</div>
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
+</body>
+
+</html>
