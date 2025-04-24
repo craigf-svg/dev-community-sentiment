@@ -18,10 +18,12 @@ reddit = praw.Reddit(client_id=os.getenv("CLIENT_ID"),
 def invoke_scry(subreddit):
     # Fetches top posts from forum and returns with title of post + sentiment analysis of post title
     subreddit = reddit.subreddit(subreddit)
+    top_posts = subreddit.top(time_filter='day', limit=5)
     posts = []
-
-    for post in subreddit.top(time_filter='day', limit=5):
-        max_posts = 1
+    
+    print(f"Gathering posts from subreddit: {subreddit.display_name}")
+    for post in top_posts:
+        max_posts = 3
         if not post.stickied:
             sentiment = classifier(post.title)
             sentiment[0]['score'] = round(sentiment[0]['score'], 2)

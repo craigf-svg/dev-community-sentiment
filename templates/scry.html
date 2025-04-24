@@ -13,13 +13,18 @@
     <div class="section"> Divined by positive to negative </div>
     <div class="section">
         <ol class="leaderboard">
-            <li class="leaderboard-item title-item">Data Divined</li>
+            <li class="leaderboard-item title-item">
+                <div class="subreddit">Subreddit</div>
+                <div class="mood">Mood</div>
+                <div class="score">Average Score</div>
+            </li>
+
             {% for entry in sorted_subreddits %}
             <li class="leaderboard-item">
                 <div class="rank">{{ loop.index }}.</div>
                 <div class="subreddit">{{ entry }}</div>
                 <div class="mood">{{ sorted_subreddits[entry]['mood']}}</div>
-                <div class="score">{{ sorted_subreddits[entry]['score'] }}</div>
+                <div class="score">{{ sorted_subreddits[entry]['average_score'] }}</div>
             </li>
             {% endfor %}
         </ol>

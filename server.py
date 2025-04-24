@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from scry import gather_conclave
-from utils import sort_by_sentiment
+from sentiment_analysis import sort_by_sentiment
 from sample_data import sample_posts, sample_sorted_subs
 from datetime import datetime, timedelta
 from subreddit_groups import subreddit_groups
