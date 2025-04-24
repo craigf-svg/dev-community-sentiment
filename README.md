@@ -31,26 +31,34 @@ A sentiment analysis service that tracks and ranks the sentiment of discussions 
     
     Focus on analyzing comment content and aggregating sentiment.
 
-2. **Restructure project** 
+2. **Tidy Up** 
 
-    Refactor project structure for better maintainability and scalability.
+    Clean up project structure and add tests for better maintainability and scalability.
 
-3. **Real-Time Data Insertion**
+3. **Dark Mode**
+
+    Add dark mode theming and toggle.
+
+4. **Real-Time Data Insertion**
 
    Currently analyzing in real time but not yet writing results into the database in real time.
 
-4. **Scheduling / Automation** 
+5. **Scheduling / Automation** 
 
-    Automate daily analysis with a cron job
+    Set up analysis to run every day automatically.
+
+6. **Add Redis**
+
+    Integrate Redis to improve performance performance and test speed differences 
 
 ### In the Pipeline
+ 
+* **Deployment**
 
-5. **Rolling 30-Day Memory of in-depth analysis**
+* **Rolling 30-Day Memory of in-depth analysis**
 
-6. **Keyword Extraction**
+* **Keyword Extraction**
 
-7. **Test Coverage and Deployment**
-   
 
 ## Setup
 
