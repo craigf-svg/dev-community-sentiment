@@ -14,17 +14,13 @@
 }
 
 .loader {
-    animation: spin 0.4s ease-in infinite alternate;
+    transform: scale(0.5);
+    animation: grow 3.0s ease-in-out infinite;
 }
 
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(180deg);
-    }
+@keyframes grow {
+    50% { transform: scale(1); }
+    100% { transform: scale(1);}
 }
 
 .leaderboard {
@@ -44,6 +40,7 @@
     transition: background-color 0.3s;
     border-bottom: 1px solid #ddd;
     display: flex;
+    align-items: center;
     padding: 12px;
 }
 
@@ -81,4 +78,20 @@
     text-align: center;
     color: #333;
     flex: 1;
+}
+
+.emoji {
+    vertical-align: middle;
+    position: relative;
+    top: -0.09em;
+    font-size: 1.2em;
+}
+
+.ferris {
+    vertical-align: middle;
+    width: 1.2em;
+    height: 1.2em;
+    margin-left: 15px;
+    transform: scale(2.5);
+    transform-origin: center center;
 }

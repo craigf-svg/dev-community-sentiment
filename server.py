@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 from models import db, SubredditSentiment
 from config import Config
 from datetime import date
+from utils import subreddit_emojis
 
 load_dotenv()
 
@@ -70,7 +71,7 @@ def scry():
         subreddit_titles_sorted = sort_by_sentiment(sample_posts)
         posts = sample_posts
 
-    return render_template('scry.html', sorted_subreddits=subreddit_titles_sorted, posts=posts)
+    return render_template('scry.html', sorted_subreddits=subreddit_titles_sorted, posts=posts, subreddit_emojis=subreddit_emojis)
 
 
 if __name__ == '__main__':
