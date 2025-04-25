@@ -37,28 +37,26 @@
             And I will become the master of my own fate, the architect of my own destiny. Builder of flask server.
         </p>
         <div>
-        <div class="section">
-            <button hx-post="/test_db" hx-swap="outerHTML" hx-trigger="click" hx-vals='{"clicked": true}'
-            onclick='this.style.display="none"'>
-            Test DB
-            </button>
-        </div>
-
-        <div class="section">
-            <button hx-post="/scry" hx-swap="outerHTML" hx-trigger="click" hx-vals='{"clicked": true}'
-            hx-indicator="#spinner" onclick='this.style.display="none"'>
-            Get values realtime from Reddit API
-            </button>
-        </div>
-
-        <div class="section">
-            <button hx-post="/leaderboard" hx-swap="outerHTML" hx-trigger="click" hx-vals='{"clicked": true}'
-            onclick='this.style.display="none"'>
-            Get data from database
-            </button>
-        </div>
-            <img src="{{ url_for('static', filename='images/htmx.svg' ) }}" id="spinner" class="htmx-indicator loader"
-                alt=" Loading..." height="150" width="150">
+            <div class="section">
+                <button hx-post="/scry" hx-swap="outerHTML" hx-trigger="click" hx-vals='{"clicked": true}'
+                    hx-indicator="#spinner" onclick='this.style.display="none"'>
+                    Get values realtime from Reddit API
+                </button>
+            </div>
+            <img src="{{ url_for('static', filename='images/htmx.svg') }}" id="spinner" class="htmx-indicator loader"
+                alt="Loading..." height="150" width="150">
+            <div class="section">
+                <button hx-post="/test_db" hx-swap="outerHTML" hx-trigger="click" hx-vals='{"clicked": true}'
+                    onclick='this.style.display="none"'>
+                    Test database
+                </button>
+            </div>
+            <div class="section">
+                <button hx-post="/leaderboard" hx-swap="outerHTML" hx-trigger="click" hx-vals='{"clicked": true}'
+                    onclick='this.style.display="none"'>
+                    Query database
+                </button>
+            </div>
         </div>
     </div>
 </body>

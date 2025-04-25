@@ -1,6 +1,20 @@
 import prawcore
 import praw
 
+subreddit_emojis = {
+    "JavaScript": "🟨",
+    "Python": "🐍",
+    "java": "☕",
+    "rust": "⚙",
+    "cpp": "C➕➕",
+    "golang": "🐹",
+    "csharp": "#️⃣",
+    "sql": "📊",
+    "php": "🐘",
+    "typescript": "🟦",
+}
+
+
 def test_reddit_connection(reddit):
     # Attempt to fetch posts from r/technology subreddit as a test
     # This will raise an exception if the connection fails

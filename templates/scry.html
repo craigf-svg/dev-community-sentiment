@@ -22,8 +22,18 @@
             {% for entry in sorted_subreddits %}
             <li class="leaderboard-item">
                 <div class="rank">{{ loop.index }}.</div>
-                <div class="subreddit">{{ entry }}</div>
-                <div class="mood">{{ sorted_subreddits[entry]['mood']}}</div>
+                <div class="subreddit">
+                    {{ entry }}
+                    {% if entry == 'rust' %}
+                    <img src="{{ url_for('static', filename='images/waving_ferris.svg') }}" alt="{{ entry }}"
+                        class="ferris" />
+                    {% else %}
+                    <span class="emoji">
+                        {{ subreddit_emojis[entry] }}
+                    </span>
+                    {% endif %}
+                </div>
+                <div class="mood">{{ sorted_subreddits[entry]['average_sentiment_label']}}</div>
                 <div class="score">{{ sorted_subreddits[entry]['average_score'] }}</div>
             </li>
             {% endfor %}

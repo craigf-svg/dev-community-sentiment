@@ -4,17 +4,26 @@ label_rank = {
     'LABEL_1': 1,
     'LABEL_2': 2
 }
-# For sentiment analysis, we find the average of these values for our formula:
-SENTIMENT_SCORES = {
-        'LABEL_0': -1,
-        'LABEL_1': 0,
-        'LABEL_2': +1
-    }
 label_text = {
     0: 'Negative',
     1: 'Neutral',
     2: 'Positive'
 }
+# For sentiment analysis, we find the average of these values for our formula:
+SENTIMENT_SCORES = {
+    'LABEL_0': -1,
+    'LABEL_1': 0,
+    'LABEL_2': +1
+}
+
+# Get label from average sentiment score
+def average_sentiment_label(score):
+    if score <= -0.1:
+        return 'Negative'
+    elif score > -0.1 and score < 0.1:
+        return 'Neutral'
+    else:
+        return 'Positive'
 
 # Function that restructures a single post into a standardized format
 def restructure_single_post(post):
@@ -66,14 +75,16 @@ def sort_by_sentiment(posts):
     for subreddit, post_list in subreddit_sentiments.items():
         if not post_list:
             continue
-        top_post = max(post_list, key=lambda x: x['score'])
+        # top_post = max(post_list, key=lambda x: x['score'])
         average_score = calculate_average_sentiment(post_list)
         aggregated[subreddit] = {
-            'top_post': top_post['post_title'],
-            'label_rank': top_post['label_rank'],
-            'score': top_post['score'],
+            # TODO: refactor top_post to "Most {sentiment} post" with highest score 
+            # 'top_post': top_post['post_title'],
+            # 'label_rank': top_post['label_rank'],
+            # 'score': top_post['score'],
             'average_score': average_score,
-            'all_posts': post_list
+            'average_sentiment_label': average_sentiment_label(average_score),
+            # Remove for now 'all_posts': post_list
         }
 
     sorted_subreddits = dict(sorted(
