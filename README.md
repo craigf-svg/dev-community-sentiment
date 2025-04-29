@@ -14,50 +14,57 @@ A sentiment analysis service that tracks and ranks the sentiment of discussions 
 | PRAW (Python Reddit API Wrapper) | 7.8.1  |
 | SQLAlchemy             | 2.0.40       |
 
-## Built Features
+### Built Features
+<details>
+  <summary>Expand</summary>
 
-- Pulled top post data via PRAW from programming language subreddits
+  - Pulled top post data via PRAW from programming language subreddits
 
-- Sentiment analysis of top programming communities post titles
+  - Sentiment analysis of top programming communities post titles
 
-- Leaderboard view ranking communities from most positive to most negative
+  - Leaderboard view ranking communities from most positive to most negative
 
-- MySQL database set up and populated with sample data
+  - MySQL database set up and populated with sample data
+
+</details>
+
+### Next-<i>ish</i> Steps
+<details>
+  <summary>Expand</summary>
+  
+  * **Write to Database**  
+    Build a futureproof schema with consistent date handling
+
+  * **Restructuring**  
+    Separate analysis into its own microservice
+
+  * **Automation**  
+    Set up analysis microservice to run at least once a day
+
+  * **Weekly analysis**  
+    Design weekly leaderboard vs daily
+
+  * **Include multiple leaderboards**  
+    Expand to 3 leaderboards of 10 subreddits
+
+</details>
 
 
-### What's Next
+### Ideas down the Pipeline
+<details>
+  <summary>Expand</summary>
 
-1. **Switch to comment analysis**
-    
-    Focus on analyzing comment content and aggregating sentiment.
+  * **Caching via Redis**
 
-2. **Tidy Up** 
+  * **Deployment**
 
-    Clean up project structure and add tests for better maintainability and scalability.
+  * **Rolling 30-Day Memory of in-depth analysis**
 
-3. **Dark Mode**
+  * **Dark Mode**
 
-    Add dark mode theming and toggle.
+  * **Keyword Extraction**
 
-4. **Real-Time Data Insertion**
-
-   Currently analyzing in real time but not yet writing results into the database in real time.
-
-5. **Scheduling / Automation** 
-
-    Set up analysis to run every day automatically.
-
-6. **Add Redis**
-
-    Integrate Redis to improve performance performance and test speed differences 
-
-### In the Pipeline
- 
-* **Deployment**
-
-* **Rolling 30-Day Memory of in-depth analysis**
-
-* **Keyword Extraction**
+</details>
 
 
 ## Setup
