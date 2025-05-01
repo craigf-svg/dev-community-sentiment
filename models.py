@@ -1,17 +1,39 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import Column, Integer, String, DateTime, Float, Date
+from sqlalchemy.ext.declarative import declarative_base
 
 db = SQLAlchemy()
 
-# ORM for a basic subreddit_sentiment table
-class SubredditSentiment(db.Model):
-    __tablename__ = 'subreddit_sentiment'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+class Post(db.Model):
+    __tablename__ = 'posts'
+
+    id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    post_id = db.Column(db.String(12), nullable=False, unique=True)
     subreddit = db.Column(db.String(255), nullable=False)
-    date = db.Column(db.Date, nullable=False)
-    avg_sentiment = db.Column(db.Numeric(5, 2)) 
-    total_comments = db.Column(db.Integer)
-    top_keywords = db.Column(db.Text)
+    timestamp_utc = db.Column(db.DateTime, nullable=False)
+    post_date_utc = db.Column(db.Date, nullable=False,
+                              default=db.func.current_date())
+    post_date_est = db.Column(db.Date, nullable=False)
+    sentiment_score = db.Column(db.SmallInteger)
+    model_label = db.Column(db.String(20))
+    model_confidence = db.Column(db.Float)
+    created_at = db.Column(db.DateTime, nullable=False,
+                           server_default=db.text("CURRENT_TIMESTAMP"))
+    created_at_est = db.Column(db.Date, default=db.text(
+        "CONVERT_TZ(created_at, 'UTC', 'America/New_York')"))
 
     def __repr__(self):
-        return f"<SubredditSentiment {self.subreddit} - {self.date}>"
+        return f"<Post {self.post_id} - {self.subreddit}>"
+
+    def to_dict(self):
+        return {
+            'post_id': self.post_id,
+            'subreddit': self.subreddit,
+            'timestamp_utc': self.timestamp_utc.strftime('%Y-%m-%d %H:%M:%S') if self.timestamp_utc else None,
+            'post_date_utc': self.post_date_utc.strftime('%Y-%m-%d') if self.post_date_utc else None,
+            'post_date_est': self.post_date_est.strftime('%Y-%m-%d') if self.post_date_est else None,
+            'sentiment_score': self.sentiment_score,
+            'model_label': self.model_label,
+            'model_confidence': self.model_confidence
+        }

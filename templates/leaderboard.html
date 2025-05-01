@@ -18,8 +18,8 @@
             <li class="leaderboard-item">
                 <div class="rank">{{ loop.index }}. </div>
                 <div class="subreddit">{{ entry.subreddit }} </div>
-                <div class="subreddit">{{ entry.date.strftime('%Y-%m-%d') }}</div>
-                <div class="subreddit">{{ entry.avg_sentiment }}</div>
+                <div class="subreddit">{{ entry.post_date_est }}</div>
+                <div class="subreddit">{{ entry.model_label }}</div>
             </li>
             {% endfor %}
         </ol>
