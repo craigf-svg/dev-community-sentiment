@@ -7,10 +7,11 @@ from datetime import datetime, timedelta
 from subreddit_groups import subreddit_groups
 import os
 from dotenv import load_dotenv
-from models import db, SubredditSentiment
+from models import db, Post
 from config import Config
 from datetime import date
 from utils import subreddit_emojis
+import json
 
 load_dotenv()
 
@@ -22,8 +23,9 @@ db.init_app(app)
 
 @app.route('/leaderboard', methods=['GET', 'POST'])
 def leaderboard():
-    filter_date = date(2025, 4, 14)
-    results = SubredditSentiment.query.filter_by(date=filter_date).limit(10).all()
+    filter_date = date(2025, 4, 30)
+    results = Post.query.filter(
+        Post.post_date_est == filter_date).limit(10).all()
     if results:
         return render_template('leaderboard.html', leaderboard=results)
     else:
@@ -32,11 +34,15 @@ def leaderboard():
 
 @app.route('/test_db', methods=['GET', 'POST'])
 def test_db():
-    results = SubredditSentiment.query.limit(10).all()
+    results = Post.query.limit(10).all()
     results_to_print = []
     if results:
         for entry in results:
-            results_to_print +=[f"Subreddit: {entry.subreddit}, Date: {entry.date}, Avg Sentiment: {entry.avg_sentiment}"]
+            post_dict = entry.to_dict()
+            post_json = json.dumps(post_dict, indent=4)
+            print('post_json', post_json)
+            results_to_print += [
+                f"Subreddit: {entry.subreddit}, Date: {entry.post_date_est}, Model Label: {entry.model_label}"]
     else:
         results_to_print = "No data available"
 

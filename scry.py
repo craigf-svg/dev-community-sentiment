@@ -3,6 +3,8 @@ import praw
 from transformers import pipeline
 from dotenv import load_dotenv
 from utils import test_reddit_connection
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 load_dotenv()
 
@@ -19,15 +21,22 @@ def invoke_scry(subreddit):
     # Fetches top posts from forum and returns with title of post + sentiment analysis of post title
     subreddit = reddit.subreddit(subreddit)
     top_posts = subreddit.top(time_filter='day', limit=8)
+    today = datetime.today().date()
     posts = []
-    
     print(f"Gathering posts from subreddit: {subreddit.display_name}")
     for post in top_posts:
         max_posts = 5
         if not post.stickied:
-            sentiment = classifier(post.title)
-            sentiment[0]['score'] = round(sentiment[0]['score'], 2)
-            posts.append({'title': post.title, 'sentiment': sentiment})
+            # Experimenting with dates
+            print('post.created', post.created)
+            post_date = datetime.fromtimestamp(post.created, tz=ZoneInfo("UTC"))
+            post_date_est = post_date.astimezone(ZoneInfo("America/New_York")).date()
+            print('post_date', post_date, 'post_date_est', post_date_est)
+            if today == post_date_est:
+                sentiment = classifier(post.title)
+                sentiment[0]['score'] = round(sentiment[0]['score'], 2)
+                posts.append(
+                    {'title': post.title, 'sentiment': sentiment, 'id': post.id})
         if len(posts) >= max_posts:
             break
 
