@@ -38,8 +38,11 @@ def test_db():
     results_to_print = []
     if results:
         for entry in results:
+            post_dict = entry.to_dict()
+            post_json = json.dumps(post_dict, indent=4)
+            print('post_json', post_json)
             results_to_print += [
-                f"Subreddit: {entry.subreddit}, Date: {entry.post_date_est}, Avg Sentiment: {entry.model_label}"]
+                f"Subreddit: {entry.subreddit}, Date: {entry.post_date_est}, Model Label: {entry.model_label}"]
     else:
         results_to_print = "No data available"
 
