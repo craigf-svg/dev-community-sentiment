@@ -1,3 +1,4 @@
+from db_insert_posts import insert_post_list
 # Labels: 0 -> Negative; 1 -> Neutral; 2 -> Positive
 label_rank = {
     'LABEL_0': 0,
@@ -33,10 +34,13 @@ def restructure_single_post(post):
     sentiment_score = post['sentiment'][0]['score']
     return {
         'post_title': post['title'],
+        'subreddit': post['subreddit'],
         'label': sentiment_label,
         'label_rank': label_rank[sentiment_label],
         'mood': mood,
         'score': sentiment_score,
+        'post_id': post['post_id'],
+        'timestamp_utc': post['timestamp_utc']
     }
 
 # Function to restructure posts by subreddit
@@ -75,6 +79,8 @@ def sort_by_sentiment(posts):
     for subreddit, post_list in subreddit_sentiments.items():
         if not post_list:
             continue
+        print('post_list[0].keys() ', post_list[0].keys())
+        insert_post_list(post_list) 
         # top_post = max(post_list, key=lambda x: x['score'])
         average_score = calculate_average_sentiment(post_list)
         aggregated[subreddit] = {
