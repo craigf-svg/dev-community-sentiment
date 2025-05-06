@@ -5,6 +5,45 @@ A sentiment analysis service that tracks and ranks the sentiment of discussions 
 🚧  This project is actively under development. 
 
 
+<p align="center">
+  <strong>
+    System Architecture Diagram
+  </strong>
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/91414292-44f8-4da6-ae5a-20b181567c68" alt="Architecture Diagram" />
+</p>
+
+## Built Features
+
+* Fetches top posts from programming language subreddits using PRAW
+* Performs sentiment analysis on post titles
+* Displays a leaderboard ranking communities from most positive to most negative
+* Sets up and populates a MySQL database with sample data
+
+### Next-<i>ish</i> Steps
+<details>
+  <summary>Expand</summary>
+  
+* Database writing on schema
+* Separate the PRAW processor into its own service
+* Infrastructure for the analysis microservice to run daily
+* Multiple Leaderboards
+* Weekly view for leaderboards
+</details>
+
+
+### Ideas down the Pipeline
+<details>
+  <summary>Expand</summary>
+  
+  * Caching via Redis
+  * Deployment
+  * Rolling 30-Day in-depth analysis memory
+  * Keyword Extraction
+</details>
+
 | Technology              | Version   |
 |------------------------------|---------------|
 | Python                | 3.13.3       |
@@ -14,66 +53,11 @@ A sentiment analysis service that tracks and ranks the sentiment of discussions 
 | PRAW (Python Reddit API Wrapper) | 7.8.1  |
 | SQLAlchemy             | 2.0.40       |
 
-### Built Features
-<details>
-  <summary>Expand</summary>
-
-  - Pulled top post data via PRAW from programming language subreddits
-
-  - Sentiment analysis of top programming communities post titles
-
-  - Leaderboard view ranking communities from most positive to most negative
-
-  - MySQL database set up and populated with sample data
-
-</details>
-
-### Next-<i>ish</i> Steps
-<details>
-  <summary>Expand</summary>
-  
-  * **Write to Database**  
-    Build a futureproof schema with consistent date handling
-
-  * **Restructuring**  
-    Separate analysis into its own microservice
-
-  * **Automation**  
-    Set up analysis microservice to run at least once a day
-
-  * **Weekly analysis**  
-    Design weekly leaderboard vs daily
-
-  * **Include multiple leaderboards**  
-    Expand to 3 leaderboards of 10 subreddits
-
-</details>
-
-
-### Ideas down the Pipeline
-<details>
-  <summary>Expand</summary>
-
-  * **Caching via Redis**
-
-  * **Deployment**
-
-  * **Rolling 30-Day Memory of in-depth analysis**
-
-  * **Dark Mode**
-
-  * **Keyword Extraction**
-
-</details>
-
-
 ## Setup
 
-1. **Set up PRAW credentials in your .env (for live data)**
+1. **Add PRAW credentials in your .env (for live data)**
 
-2. **Set Up environment from root folder**
-
-    Make sure you have Python installed `python --version` | `python3 --version`
+2. **Make sure you have Python installed `python --version` | `python3 --version`**
 
 3. **Install dependencies**
 
