@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from sqlalchemy import func
 from flask_sqlalchemy import SQLAlchemy
 from scry import gather_conclave
 from sentiment_analysis import sort_by_sentiment
@@ -21,32 +22,40 @@ app.config.from_object(Config)
 db.init_app(app)
 
 
-@app.route('/leaderboard', methods=['GET', 'POST'])
-def leaderboard():
-    filter_date = date(2025, 4, 30)
-    results = Post.query.filter(
-        Post.post_date_est == filter_date).limit(10).all()
+@app.route('/all_time_leaderboard', methods=['GET', 'POST'])
+def all_time_leaderboard():
+    results = (
+        db.session.query(
+            Post.subreddit,
+            func.round(func.avg(Post.sentiment_score),
+                       2).label("avg_sentiment")
+        )
+        .group_by(Post.subreddit)
+        .order_by(func.avg(Post.sentiment_score).desc())
+        .all()
+    )
+    return render_template('all_time_leaderboard.html', leaderboard=results, subreddit_emojis=subreddit_emojis)
+
+
+@app.route('/daily_leaderboard', methods=['GET', 'POST'])
+def daily_leaderboard():
+    filter_date = date(2025, 5, 3)
+    results = (
+        db.session.query(
+            Post.subreddit,
+            func.round(func.avg(Post.sentiment_score),
+                       2).label("avg_sentiment")
+        )
+        .filter(Post.post_date_est == filter_date)
+        .group_by(Post.subreddit)
+        .order_by(func.avg(Post.sentiment_score).desc())
+        .all()
+    )
+    # all keys: post_id, subreddit, timestamp_utc, post_date_utc, post_date_est, sentiment_label:Neutral, sentiment_score:0, model_label:LABEL_1, model_confidence:0.82
     if results:
-        return render_template('leaderboard.html', leaderboard=results)
+        return render_template('daily_leaderboard.html', leaderboard=results, subreddit_emojis=subreddit_emojis)
     else:
         return "No data available"
-
-
-@app.route('/test_db', methods=['GET', 'POST'])
-def test_db():
-    results = Post.query.limit(10).all()
-    results_to_print = []
-    if results:
-        for entry in results:
-            post_dict = entry.to_dict()
-            post_json = json.dumps(post_dict, indent=4)
-            print('post_json', post_json)
-            results_to_print += [
-                f"Subreddit: {entry.subreddit}, Date: {entry.i}, Model Label: {entry.model_label}"]
-    else:
-        results_to_print = "No data available"
-
-    return f"First 10 subreddit sentiments:\n{results_to_print}"
 
 
 def get_last_update():

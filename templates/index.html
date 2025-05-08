@@ -37,6 +37,7 @@
             And I will become the master of my own fate, the architect of my own destiny. Builder of flask server.
         </p>
         <div>
+            <h2>From Reddit</h2>
             <div class="section">
                 <button hx-post="/scry" hx-swap="outerHTML" hx-trigger="click" hx-vals='{"clicked": true}'
                     hx-indicator="#spinner" onclick='this.style.display="none"'>
@@ -45,19 +46,21 @@
             </div>
             <img src="{{ url_for('static', filename='images/htmx.svg') }}" id="spinner" class="htmx-indicator loader"
                 alt="Loading..." height="150" width="150">
+            <h2>From MySQL Database</h2>
             <div class="section">
-                <button hx-post="/test_db" hx-swap="outerHTML" hx-trigger="click" hx-vals='{"clicked": true}'
+                <button hx-post="/daily_leaderboard" hx-swap="outerHTML" hx-trigger="click" hx-vals='{"clicked": true}'
                     onclick='this.style.display="none"'>
-                    Test database
+                    Daily leaderboard
                 </button>
             </div>
             <div class="section">
-                <button hx-post="/leaderboard" hx-swap="outerHTML" hx-trigger="click" hx-vals='{"clicked": true}'
-                    onclick='this.style.display="none"'>
-                    Query database
+                <button hx-post="/all_time_leaderboard" hx-swap="outerHTML" hx-trigger="click"
+                    hx-vals='{"clicked": true}' onclick='this.style.display="none"'>
+                    All time leaderboard
                 </button>
             </div>
         </div>
+    </div>
     </div>
 </body>
 

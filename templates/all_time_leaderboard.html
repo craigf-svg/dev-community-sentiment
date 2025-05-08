@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧙‍♂️</title>
+</head>
+
+<body>
+    <h3>All Time leaderboard📊</h3>
+
+    <div class="section">
+        <ol class="leaderboard">
+            {% for entry in leaderboard %}
+            <li class="leaderboard-item">
+                <div class="rank">{{ loop.index }}. </div>
+                <div class="subreddit">
+                    {{ entry.subreddit }}
+                    {% if entry.subreddit == 'rust' %}
+                    <img src="{{ url_for('static', filename='images/waving_ferris.svg') }}" alt="{{ entry }}"
+                        class="ferris" />
+                    {% else %}
+                    <span class="emoji">
+                        {{ subreddit_emojis[entry.subreddit] }}
+                    </span>
+                    {% endif %}
+                </div>
+                <div class="subreddit">{{ entry.avg_sentiment }}</div>
+                <div class="subreddit">{{ entry.sentiment_label }}</div>
+                <div class="subreddit">{{ entry.score }}</div>
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
+</body>
+
+</html>
