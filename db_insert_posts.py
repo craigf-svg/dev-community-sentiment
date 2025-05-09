@@ -1,5 +1,3 @@
-# insert_posts_simple.py
-
 from models import db, Post
 
 SENTIMENT_SCORES = {
@@ -8,8 +6,10 @@ SENTIMENT_SCORES = {
     'LABEL_2': +1
 }
 
+
 def insert_post_list(post_list):
-    inserted_count = 0
+    successfully_inserted_count = 0
+    not_inserted_count = 0
     for post in post_list:
         try:
             # TODO: Make post_list follow format of ORM on creation
@@ -27,10 +27,12 @@ def insert_post_list(post_list):
             )
             db.session.add(new_post)
             db.session.commit()
-            inserted_count += 1
+            successfully_inserted_count += 1
         except Exception as e:
+            not_inserted_count += 1
             db.session.rollback()
             print(
                 f"Skipped duplicate or errored post_id {post['post_id']}: {e}")
 
-    print(f'{inserted_count} posts inserted successfully.')
+    print(f'{successfully_inserted_count} posts inserted successfully.')
+    return successfully_inserted_count, not_inserted_count

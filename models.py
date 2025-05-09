@@ -20,6 +20,7 @@ class Post(db.Model):
     # Generated columns
     post_date_utc = db.Column(db.Date, db.FetchedValue())
     post_date_est = db.Column(db.Date, db.FetchedValue())
+
     def __repr__(self):
         return f"<Post {self.post_id} - {self.subreddit}>"
 
@@ -35,4 +36,36 @@ class Post(db.Model):
             'sentiment_score': self.sentiment_score,
             'model_label': self.model_label,
             'model_confidence': self.model_confidence
+        }
+
+
+class FetchLog(db.Model):
+    __tablename__ = 'fetch_log'
+
+    id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    created_at_utc = db.Column(
+        db.TIMESTAMP, nullable=False, server_default=db.func.now())
+    created_date_est = db.Column(db.Date, db.FetchedValue())
+    created_date_utc = db.Column(db.Date, db.FetchedValue())
+    inserted_post_count = db.Column(db.Integer, default=0)
+    skipped_duplicate_post_count = db.Column(db.Integer, default=0)
+    duration_seconds = db.Column(db.Float)
+    status = db.Column(db.String(20), nullable=False, default='success')
+
+    def __repr__(self):
+        return (
+            f"<FetchLog id={self.id} status={self.status} "
+            f"inserted_post_count={self.inserted_post_count}>"
+        )
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'created_at_utc': self.created_at_utc.isoformat() if self.created_at_utc else None,
+            'created_date_est': self.created_date_est.strftime('%Y-%m-%d') if self.created_date_est else None,
+            'created_date_utc': self.created_date_utc.strftime('%Y-%m-%d') if self.created_date_utc else None,
+            'inserted_post_count': self.inserted_post_count,
+            'skipped_duplicate_post_count': self.skipped_duplicate_post_count,
+            'duration_seconds': self.duration_seconds,
+            'status': self.status
         }
