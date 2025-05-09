@@ -17,16 +17,21 @@ A sentiment analysis service that tracks and ranks the sentiment of discussions 
 
 ## Built Features
 
-* Fetches top posts from programming language subreddits using PRAW
-* Performs sentiment analysis on post titles
-* Displays a leaderboard ranking communities from most positive to most negative
-* Sets up and populates a MySQL database with sample data
+* Fetch top posts from programming language subreddits using PRAW
+* Perform sentiment analysis on post titles
+* Display a leaderboard ranking communities from most positive to most negative
+* Write analysis results and post information to MySQL database
+* Log relevant information for each run, including timestamps and inserted/skipped post counts
+
+
+<i><strong>In progress</strong></i>
+
+* Write analysis duration and status to fetch log entries
 
 ### Next-<i>ish</i> Steps
 <details>
   <summary>Expand</summary>
   
-* Database writing on schema
 * Separate the PRAW processor into its own service
 * Infrastructure for the analysis microservice to run daily
 * Multiple Leaderboards
