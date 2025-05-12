@@ -1,101 +1,35 @@
 from db_insert_posts import insert_post_list
-# Labels: 0 -> Negative; 1 -> Neutral; 2 -> Positive
-label_rank = {
-    'LABEL_0': 0,
-    'LABEL_1': 1,
-    'LABEL_2': 2
-}
-label_text = {
-    0: 'Negative',
-    1: 'Neutral',
-    2: 'Positive'
-}
-# For sentiment analysis, we find the average of these values for our formula:
-SENTIMENT_SCORES = {
-    'LABEL_0': -1,
-    'LABEL_1': 0,
-    'LABEL_2': +1
-}
+from fetch_logger import log_fetch_result
+from restructure_data import structure_sentiment_data, calculate_average_sentiment, average_sentiment_label
 
-# Get label from average sentiment score
-def average_sentiment_label(score):
-    if score <= -0.1:
-        return 'Negative'
-    elif score > -0.1 and score < 0.1:
-        return 'Neutral'
-    else:
-        return 'Positive'
 
-# Function that restructures a single post into a standardized format
-def restructure_single_post(post):
-    sentiment_label = post['sentiment'][0]['label']
-    label_number = label_rank[sentiment_label]
-    mood = label_text[label_number]
-    sentiment_score = post['sentiment'][0]['score']
-    return {
-        'post_title': post['title'],
-        'subreddit': post['subreddit'],
-        'label': sentiment_label,
-        'label_rank': label_rank[sentiment_label],
-        'mood': mood,
-        'score': sentiment_score,
-        'post_id': post['post_id'],
-        'timestamp_utc': post['timestamp_utc']
-    }
-
-# Function to restructure posts by subreddit
-def restructure_subreddits_posts(results, subreddit, posts):
-    for post in posts:
-        if subreddit in results:
-            results[subreddit].append(restructure_single_post(post))
-        else:
-            results[subreddit] = [restructure_single_post(post)]
-    print(results)
-
-# Function to structure the sentiment data by subreddit
-def structure_sentiment_data(data):
-    result = {}
-    for subreddit, posts in data.items():
-        restructure_subreddits_posts(result, subreddit, posts)
-    return result
-
-# Function to calculate the average sentiment score of posts
-def calculate_average_sentiment(post_list):
-    # Positive = +1, Neutral = 0, Negative = -1
-    print('posts_list', post_list)
-    for post in post_list:
-        sentiment_label = post['label']
-        post['score'] = SENTIMENT_SCORES[sentiment_label]
-    # Calculate the average sentiment score
-    total_score = sum(post['score'] for post in post_list)
-    average_score = round(total_score / len(post_list), 2)
-    return average_score
-
-# Function to sort subreddits by average sentiment
-def sort_by_sentiment(posts):
-    subreddit_sentiments = structure_sentiment_data(posts)
+def process_and_insert(posts_data):
+    # Structure Data
+    subreddit_sentiments = structure_sentiment_data(posts_data)
     aggregated = {}
-    # For each list of posts sorted by subreddit
+    total_success_count = 0
+    total_skipped_count = 0
+    # Loop+insert newly structured data by post list of each subreddit
     for subreddit, post_list in subreddit_sentiments.items():
         if not post_list:
             continue
-        print('post_list[0].keys() ', post_list[0].keys())
-        insert_post_list(post_list) 
-        # top_post = max(post_list, key=lambda x: x['score'])
+
+        successfully_inserted_count, not_inserted_count = insert_post_list(
+            post_list)
+        total_success_count += successfully_inserted_count
+        total_skipped_count += not_inserted_count
+
         average_score = calculate_average_sentiment(post_list)
         aggregated[subreddit] = {
-            # TODO: refactor top_post to "Most {sentiment} post" with highest score 
-            # 'top_post': top_post['post_title'],
-            # 'label_rank': top_post['label_rank'],
-            # 'score': top_post['score'],
             'average_score': average_score,
-            'average_sentiment_label': average_sentiment_label(average_score),
-            # Remove for now 'all_posts': post_list
+            'average_sentiment_label': average_sentiment_label(average_score)
         }
 
+    log_fetch_result(post_list, total_success_count, total_skipped_count)
     sorted_subreddits = dict(sorted(
         aggregated.items(),
-        key=lambda x: (x[1]['average_score']),
+        key=lambda x: x[1]['average_score'],
         reverse=True
     ))
+
     return sorted_subreddits

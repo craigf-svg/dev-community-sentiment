@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from sqlalchemy import func
 from flask_sqlalchemy import SQLAlchemy
 from scry import gather_conclave
-from sentiment_analysis import sort_by_sentiment
+from sentiment_analysis import process_and_insert
 from sample_data import sample_posts, sample_sorted_subs
 from datetime import datetime, timedelta
 from subreddit_groups import subreddit_groups
@@ -75,15 +75,17 @@ def home():
 
 @app.route('/scry', methods=['GET', 'POST'])
 def scry():
+    # Start timer
+    timer = datetime.now()
     # Fetch + analyze subreddit sentiment
     subreddits = subreddit_groups
 
     posts = gather_conclave(subreddits)
 
     if posts:
-        subreddit_titles_sorted = sort_by_sentiment(posts)
+        subreddit_titles_sorted = process_and_insert(posts)
     else:
-        subreddit_titles_sorted = sort_by_sentiment(sample_posts)
+        subreddit_titles_sorted = process_and_insert(sample_posts)
         posts = sample_posts
 
     return render_template('scry.html', sorted_subreddits=subreddit_titles_sorted, posts=posts, subreddit_emojis=subreddit_emojis)
