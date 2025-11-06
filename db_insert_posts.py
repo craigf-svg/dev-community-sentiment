@@ -12,11 +12,8 @@ def insert_post_list(post_list):
     not_inserted_count = 0
     for post in post_list:
         try:
-            # TODO: Make post_list follow format of ORM on creation
-            # Rather than mapping here for consistency
             int_timestamp_utc = int(post['timestamp_utc'])
             new_post = Post(
-                # post_title=post['post_title'],
                 post_id=post['post_id'],
                 subreddit=post['subreddit'],
                 timestamp_utc=int_timestamp_utc,
