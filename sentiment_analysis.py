@@ -3,7 +3,7 @@ from fetch_logger import log_fetch_result
 from restructure_data import structure_sentiment_data, calculate_average_sentiment, average_sentiment_label
 
 
-def process_and_insert(posts_data):
+def process_and_insert(posts_data, starting_time):
     # Structure Data
     subreddit_sentiments = structure_sentiment_data(posts_data)
     aggregated = {}
@@ -25,11 +25,12 @@ def process_and_insert(posts_data):
             'average_sentiment_label': average_sentiment_label(average_score)
         }
 
-    log_fetch_result(post_list, total_success_count, total_skipped_count)
     sorted_subreddits = dict(sorted(
         aggregated.items(),
         key=lambda x: x[1]['average_score'],
         reverse=True
     ))
+
+    log_fetch_result(total_success_count, total_skipped_count, starting_time)
 
     return sorted_subreddits

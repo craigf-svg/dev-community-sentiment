@@ -75,17 +75,16 @@ def home():
 
 @app.route('/scry', methods=['GET', 'POST'])
 def scry():
-    # Start timer
-    timer = datetime.now()
+    starting_time = datetime.now()
     # Fetch + analyze subreddit sentiment
     subreddits = subreddit_groups
 
     posts = gather_conclave(subreddits)
 
     if posts:
-        subreddit_titles_sorted = process_and_insert(posts)
+        subreddit_titles_sorted = process_and_insert(posts, starting_time)
     else:
-        subreddit_titles_sorted = process_and_insert(sample_posts)
+        subreddit_titles_sorted = process_and_insert(sample_posts, starting_time)
         posts = sample_posts
 
     return render_template('scry.html', sorted_subreddits=subreddit_titles_sorted, posts=posts, subreddit_emojis=subreddit_emojis)
